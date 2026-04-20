@@ -1,0 +1,2 @@
+rootProject.name = 'audit-log-service'
+includeBuild '../ISUMS_Observability-Common'
