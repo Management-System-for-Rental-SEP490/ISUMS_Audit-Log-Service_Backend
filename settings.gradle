@@ -1,2 +1,6 @@
 rootProject.name = 'audit-log-service'
-includeBuild '../ISUMS_Observability-Common'
+
+def obsCommon = file('../ISUMS_Observability-Common')
+if (obsCommon.exists()) {
+    includeBuild obsCommon
+}
