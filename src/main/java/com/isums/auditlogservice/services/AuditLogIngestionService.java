@@ -37,7 +37,7 @@ public class AuditLogIngestionService {
         AuditLog log = new AuditLog();
         log.setEventId(event.getEventId());
         log.setEventVersion(event.getEventVersion());
-        log.setTraceId(event.getTraceId());
+        log.setTraceId(resolveTraceId(event));
         log.setSpanId(event.getSpanId());
         log.setRequestId(event.getRequestId());
         log.setCorrelationId(event.getCorrelationId());
@@ -71,5 +71,15 @@ public class AuditLogIngestionService {
             throw new IllegalArgumentException("Audit " + field + " is required");
         }
         return value;
+    }
+
+    private String resolveTraceId(AuditEvent event) {
+        if (StringUtils.hasText(event.getTraceId())) {
+            return event.getTraceId();
+        }
+        if (StringUtils.hasText(event.getCorrelationId())) {
+            return event.getCorrelationId();
+        }
+        return event.getRequestId();
     }
 }
